@@ -14,7 +14,7 @@ ports_description:
   7860/tcp: "Web Interface & API"
 
 options:
-  api_password: "2@TYg$jdeYD@8HG5&stexFrhNZu1X2e$*yp"
+  api_password: "cambiami"
   port: 7860
   mpd_mode: "legacy"
   log_level: "WARNING"
