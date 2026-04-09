@@ -37,9 +37,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 RUN python -m playwright install chromium
 
-COPY run.sh /run.sh
-RUN chmod +x /run.sh
+COPY start.py /start.py
 
 EXPOSE 7860
 
-CMD ["/run.sh"]
+CMD ["python3", "/start.py"]
