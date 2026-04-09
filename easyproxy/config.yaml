@@ -1,6 +1,6 @@
 name: "EasyProxy"
 description: "Universal HLS/M3U8/IPTV Proxy"
-version: "1.0.0"
+version: "1.0.1"
 slug: "easyproxy"
 init: false
 
