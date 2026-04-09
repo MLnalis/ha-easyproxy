@@ -1,11 +1,5 @@
 FROM python:3.11-bookworm
 
-LABEL \
-  io.hass.name="EasyProxy" \
-  io.hass.description="Universal HLS/M3U8/IPTV Proxy" \
-  io.hass.version="1.0.2 \
-  io.hass.type="addon"
-
 ENV PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
 ENV PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=0
 ENV PYTHONUNBUFFERED=1
