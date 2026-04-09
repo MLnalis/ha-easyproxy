@@ -1,5 +1,4 @@
-ARG BUILD_FROM="python:3.11-bookworm"
-FROM ${BUILD_FROM}
+FROM python:3.11-bookworm
 
 LABEL \
   io.hass.name="EasyProxy" \
