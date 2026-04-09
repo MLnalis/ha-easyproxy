@@ -1,6 +1,6 @@
 name: "EasyProxy"
 description: "EasyProxy per Home Assistant: proxy HLS/M3U8/IPTV"
-version: "1.0.3"
+version: "1.0.4"
 slug: "easyproxy"
 init: false
 
