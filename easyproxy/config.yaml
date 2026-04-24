@@ -1,53 +1,27 @@
-name: "EasyProxy Full"
-description: "Proxy universale HLS/M3U8/IPTV con FlareSolverr v3 e Byparr. Drop-in per Stremio / MediaFlow Proxy."
-version: "2.1.5"
+name: "EasyProxy"
+description: >
+  MediaFlow Proxy per Stremio — versione FULL senza WARP.
+  Proxy streaming per add-on Stremio italiani (Streamvix, ecc.)
+version: "1.0.0"
 slug: "easyproxy"
 url: "https://github.com/MLnalis/ha-easyproxy"
-init: false
-
 arch:
   - amd64
-
-startup: application
-boot: auto
-
+  - aarch64
+  - armv7
+init: false
 ports:
   7860/tcp: 7860
 ports_description:
-  7860/tcp: "EasyProxy — Web Interface & API"
-
+  7860/tcp: "EasyProxy Web / API"
 options:
-  api_password: "cambiami"
-  port: 7860
-  mpd_mode: "legacy"
-  log_level: "WARNING"
-  dvr_enabled: false
-  global_proxy: ""
-  transport_routes: ""
-  workers: 0
-
+  api_password: "cambia_questa_password"
+  worker_class: "uvicorn.workers.UvicornWorker"
+  workers: 1
 schema:
-  api_password: password
-  port: port
-  mpd_mode: list(ffmpeg|legacy|none)
-  log_level: list(DEBUG|INFO|WARNING|ERROR|CRITICAL)
-  dvr_enabled: bool
-  global_proxy: "str?"
-  transport_routes: "str?"
-  workers: "int(0,32)"
-
+  api_password: str
+  worker_class: str
+  workers: int
 map:
-  - type: share
-    read_only: false
-
-ingress: true
-ingress_port: 7860
-ingress_stream: true
-panel_icon: "mdi:television-play"
-panel_title: "EasyProxy"
-
-watchdog: "http://[HOST]:[PORT:7860]/api/info"
-
-backup: hot
-backup_exclude:
-  - /share/easyproxy/recordings
+  - config:rw
+image: "ghcr.io/home-assistant/{arch}-addon-easyproxy"
