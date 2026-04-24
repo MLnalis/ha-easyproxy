@@ -13,12 +13,19 @@ ENV PYTHONUNBUFFERED=1 \
     CHROME_DRIVER_PATH=/usr/bin/chromedriver \
     FLARESOLVERR_URL=http://localhost:8191 \
     BYPARR_URL=http://localhost:8192 \
-    BYPARR_PORT=8192
+    BYPARR_PORT=8192 \
+    PORT=7860
 
-# ── Dipendenze di sistema (Debian — immagine base HAOS python:3.12) ──────────
+# ── Dipendenze di sistema ────────────────────────────────────────────────────
 RUN apt-get update && apt-get install -y --no-install-recommends \
+    python3 \
+    python3-pip \
+    python3-dev \
+    python3-venv \
     git \
     curl \
+    gnupg \
+    gpg \
     ffmpeg \
     chromium \
     chromium-driver \
@@ -40,31 +47,35 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libxshmfence1 \
     ca-certificates \
     fonts-liberation \
+    netcat-openbsd \
     && rm -rf /var/lib/apt/lists/*
+
+# ── Symlink python3 → python (per compatibilità script) ─────────────────────
+RUN ln -sf /usr/bin/python3 /usr/bin/python
 
 WORKDIR /app
 
 # ── EasyProxy ────────────────────────────────────────────────────────────────
 RUN git clone https://github.com/realbestia1/EasyProxy.git . \
-    && pip install --no-cache-dir -r requirements.txt \
-    && python -m playwright install chromium --with-deps
+    && pip3 install --no-cache-dir --break-system-packages -r requirements.txt \
+    && python3 -m playwright install chromium --with-deps
 
 # ── FlareSolverr v3 (Python) ─────────────────────────────────────────────────
 RUN git clone https://github.com/FlareSolverr/FlareSolverr.git /app/flaresolverr \
     && cd /app/flaresolverr \
     && sed -i 's/driver_executable_path=driver_exe_path/driver_executable_path="\/usr\/bin\/chromedriver"/' src/utils.py \
     && sed -i "s|options.add_argument('--no-sandbox')|options.add_argument('--no-sandbox'); options.add_argument('--disable-dev-shm-usage'); options.add_argument('--disable-gpu'); options.add_argument('--headless=new')|" src/utils.py \
-    && sed -i "s|^\([[:space:]]*\)start_xvfb_display()|\1pass|g" src/utils.py \
-    && pip install --no-cache-dir -r requirements.txt
+    && sed -i "s|^\([[:space:]]*\)start_xvfb_display()|\1pass  # disabled: no Xvfb on HAOS|g" src/utils.py \
+    && pip3 install --no-cache-dir --break-system-packages -r requirements.txt
 
-# ── Byparr (bypass Python 3.14 requirement) ───────────────────────────────────
+# ── Byparr (patch requisito Python >= 3.14 → >= 3.11) ────────────────────────
 RUN git clone https://github.com/ThePhaseless/Byparr.git /app/byparr_src \
     && cd /app/byparr_src \
     && sed -i 's/requires-python = .*/requires-python = ">=3.11"/' pyproject.toml \
-    && pip install --no-cache-dir . \
-    && python -m camoufox fetch
+    && pip3 install --no-cache-dir --break-system-packages . \
+    && python3 -m camoufox fetch
 
-# ── Script di avvio ──────────────────────────────────────────────────────────
+# ── Script di avvio S6-Overlay ───────────────────────────────────────────────
 COPY run.sh /run.sh
 RUN chmod a+x /run.sh
 

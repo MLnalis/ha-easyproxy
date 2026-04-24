@@ -1,8 +1,8 @@
 name: "EasyProxy (FULL, no WARP)"
 description: >
-  MediaFlow Proxy per Stremio — versione FULL senza WARP.
-  Proxy streaming per add-on Stremio italiani (Streamvix, ecc.)
-version: "1.0.2"
+  EasyProxy versione FULL senza WARP per Stremio.
+  Include FlareSolverr v3 e Byparr integrati.
+version: "1.0.3"
 slug: "easyproxy"
 url: "https://github.com/realbestia1/EasyProxy"
 arch:
@@ -16,12 +16,9 @@ ports_description:
   7860/tcp: "EasyProxy Web / API"
 options:
   api_password: "cambia_questa_password"
-  worker_class: "uvicorn.workers.UvicornWorker"
   workers: 1
 schema:
   api_password: str
-  worker_class: str
   workers: int
 map:
   - config:rw
-
