@@ -2,7 +2,7 @@ name: "EasyProxy (FULL, no WARP)"
 description: >
   MediaFlow Proxy per Stremio — versione FULL senza WARP.
   Proxy streaming per add-on Stremio italiani (Streamvix, ecc.)
-version: "1.0.0"
+version: "1.0.2"
 slug: "easyproxy"
 url: "https://github.com/realbestia1/EasyProxy"
 arch:
@@ -24,4 +24,4 @@ schema:
   workers: int
 map:
   - config:rw
-image: "ghcr.io/home-assistant/{arch}-addon-easyproxy"
+
