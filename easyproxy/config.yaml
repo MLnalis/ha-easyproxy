@@ -1,6 +1,6 @@
 name: "EasyProxy Full"
 description: "Proxy universale HLS/M3U8/IPTV con FlareSolverr v3 e Byparr. Compatibile con Stremio/MediaFlow Proxy."
-version: "2.0.0"
+version: "2.1.0"
 slug: "easyproxy"
 init: false
 
