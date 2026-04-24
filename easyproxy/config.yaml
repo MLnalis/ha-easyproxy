@@ -2,13 +2,12 @@ name: "EasyProxy (FULL, no WARP)"
 description: >
   EasyProxy versione FULL senza WARP per Stremio.
   Include FlareSolverr v3 e Byparr integrati.
-version: "1.0.3"
+version: "1.0.4"
 slug: "easyproxy"
 url: "https://github.com/realbestia1/EasyProxy"
 arch:
   - amd64
   - aarch64
-  - armv7
 init: false
 ports:
   7860/tcp: 7860

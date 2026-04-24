@@ -1,16 +1,16 @@
-# EasyProxy (FULL, no WARP) — Documentazione
+# EasyProxy (FULL, no WARP)
 
-Proxy streaming per Stremio basato su [EasyProxy](https://github.com/realbestia1/EasyProxy),
-versione **FULL** con FlareSolverr v3 e Byparr integrati, **senza WARP**.
+Proxy streaming per Stremio — versione FULL con FlareSolverr v3 e Byparr, senza WARP.
+Basato sull'originale [Dockerfile.full](https://github.com/realbestia1/EasyProxy/blob/main/Dockerfile.full).
 
-## Opzioni di configurazione
+## Configurazione
 
 | Opzione | Descrizione | Default |
 |---|---|---|
-| `api_password` | Password API per proteggere il proxy | `cambia_questa_password` |
-| `workers` | Numero di worker Gunicorn | `1` |
+| `api_password` | Password per proteggere il proxy | `cambia_questa_password` |
+| `workers` | Worker Gunicorn | `1` |
 
-## Porte
+## Porte interne
 
 | Porta | Servizio |
 |---|---|
@@ -20,6 +20,10 @@ versione **FULL** con FlareSolverr v3 e Byparr integrati, **senza WARP**.
 
 ## Utilizzo con Stremio
 
-Configura l'addon Stremio (es. Streamvix) con:
-- **Proxy URL**: `http://<IP_HOME_ASSISTANT>:7860`
-- **Password**: il valore di `api_password`
+- **Proxy URL**: `http://<IP_HA>:7860`
+- **Password**: valore di `api_password`
+
+## Note
+
+- WARP è installato nell'immagine ma **mai avviato** (ENV ENABLE_WARP=false)
+- Prima build: 10-15 minuti (scarica Chromium, Playwright, dipendenze)
