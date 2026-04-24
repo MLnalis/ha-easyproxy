@@ -1,22 +1,20 @@
 # Changelog
 
+## 1.0.5
+- Fix FlareSolverr: Chromium non si avviava in container HAOS
+  - Aggiunti flag: --disable-dev-shm-usage, --headless=new, --no-zygote,
+    --single-process, --disable-gpu, --disable-software-rasterizer
+  - Patch applicata tramite script Python (patch_flaresolverr.py) invece di sed
+- Rimosso build.yaml (causava errori tag ghcr.io inesistenti)
+- WARP installato ma bloccato via ENV hardcoded
+
 ## 1.0.4
-- FROM python:3.12-slim-bookworm (identico all'originale Dockerfile.full)
-- Rimosso build.yaml: causa warning deprecation e tag inesistenti su ghcr.io
-- WARP installato ma disabilitato via ENV hardcoded (ENABLE_WARP=false)
-- run.sh: rimosso bashio (non disponibile), usa jq per leggere /data/options.json
-- Byparr: patch requires-python >= 3.12 (fix crash pydantic TypedDict su Python < 3.12)
-- EasyProxy clonato in /app/easyproxy (evita conflitti con /app root)
+- FROM python:3.12-slim-bookworm (identico all'originale)
+- run.sh: jq invece di bashio per leggere /data/options.json
+- Byparr: patch requires-python >= 3.12
 
 ## 1.0.3
-- Tentativo ghcr.io/home-assistant/amd64-base-debian:bookworm
-- Fallito: Python 3.11 causa crash Byparr (pydantic TypedDict)
+- Tentativo base-debian:bookworm (Python 3.11, Byparr crash pydantic)
 
-## 1.0.2
-- Tentativo base-python:3.12-bookworm (tag inesistente)
-
-## 1.0.1
-- Fix: rimossa riga image: da config.yaml
-
-## 1.0.0
-- Prima release
+## 1.0.2 / 1.0.1 / 1.0.0
+- Fix progressivi tag ghcr.io, sed Alpine, riga image:
