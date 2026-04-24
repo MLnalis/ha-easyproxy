@@ -1,6 +1,6 @@
 name: "EasyProxy Full"
 description: "Proxy universale HLS/M3U8/IPTV con FlareSolverr v3 e Byparr. Drop-in per Stremio / MediaFlow Proxy."
-version: "2.1.3"
+version: "2.1.5"
 slug: "easyproxy"
 url: "https://github.com/MLnalis/ha-easyproxy"
 init: false
@@ -16,8 +16,6 @@ ports:
 ports_description:
   7860/tcp: "EasyProxy — Web Interface & API"
 
-# Equivalente alle variabili environment del docker-compose originale:
-#   API_PASSWORD, PORT, MPD_MODE, GLOBAL_PROXY, TRANSPORT_ROUTES
 options:
   api_password: "cambiami"
   port: 7860
@@ -38,7 +36,6 @@ schema:
   transport_routes: "str?"
   workers: "int(0,32)"
 
-# Equivalente a: volumes: - /share/easyproxy:/share/easyproxy
 map:
   - type: share
     read_only: false
@@ -49,7 +46,6 @@ ingress_stream: true
 panel_icon: "mdi:television-play"
 panel_title: "EasyProxy"
 
-# HA riavvia automaticamente se /api/info non risponde
 watchdog: "http://[HOST]:[PORT:7860]/api/info"
 
 backup: hot
