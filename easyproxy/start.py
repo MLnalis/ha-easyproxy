@@ -5,7 +5,6 @@ FlareSolverr, Byparr e infine EasyProxy via Gunicorn.
 """
 import json
 import os
-import shutil
 import subprocess
 import sys
 
@@ -44,15 +43,6 @@ print(f"[INFO] MPD_MODE={os.environ['MPD_MODE']}")
 print(f"[INFO] DVR_ENABLED={os.environ['DVR_ENABLED']}")
 print(f"[INFO] FLARESOLVERR_URL={os.environ['FLARESOLVERR_URL']}")
 print(f"[INFO] BYPARR_URL={os.environ['BYPARR_URL']}")
-
-# ---------- Copia template info.html personalizzato ----------
-_info_src = "/info.html"
-_info_dst = "/app/easyproxy/templates/info.html"
-if os.path.exists(_info_src) and os.path.exists("/app/easyproxy/templates"):
-    shutil.copy2(_info_src, _info_dst)
-    print(f"[INFO] Template info.html copiato in {_info_dst}")
-else:
-    print(f"[WARN] Template info.html non copiato (src={_info_src} dst_dir={os.path.dirname(_info_dst)})")
 
 # ---------- FlareSolverr ----------
 print("[INFO] Avvio FlareSolverr v3 (porta 8191)...")

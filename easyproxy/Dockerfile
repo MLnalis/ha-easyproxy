@@ -67,9 +67,8 @@ WORKDIR /app/easyproxy
 RUN pip install --no-cache-dir -r requirements.txt \
  && python -m playwright install chromium
 
-# ---------- HA scripts + template personalizzato ----------
+# ---------- HA start script ----------
 COPY start.py /start.py
-COPY info.html /info.html
 
 EXPOSE 7860
 

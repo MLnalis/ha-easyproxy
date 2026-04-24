@@ -1,0 +1,135 @@
+# Home Assistant Add-on: EasyProxy Full
+
+![Project Maintenance][maintenance-shield]
+[![GitHub Release][releases-shield]][releases]
+[![License][license-shield]](LICENSE)
+
+Proxy universale per stream HLS, M3U8 e IPTV con FlareSolverr v3 e Byparr integrati.
+
+## About
+
+EasyProxy Full è un proxy server asincrono per stream HLS, M3U8, MPD/DASH e IPTV.
+Questa versione **Full** include nativamente **FlareSolverr v3** (bypass Cloudflare)
+e **Byparr** (sessioni IP-sticky per DoodStream), ed è compatibile come sostituto
+drop-in di **MediaFlow Proxy** per gli add-on Stremio.
+
+Equivalente a:
+
+```bash
+docker run -d -p 7860:7860 ghcr.io/realbestia1/easyproxy:full
+```
+
+## Features
+
+- 🎬 **Proxy universale** — HLS, M3U8, MPD/DASH, segmenti TS/fMP4
+- 🔐 **Extractor specializzati** — Vavoo, DaddyliveHD, Sportsonline, VixSrc e altri
+- 🛡️ **FlareSolverr v3** — bypass Cloudflare per Mixdrop, Deltabit, safego.cc…
+- 🍪 **Byparr** — sessioni IP-sticky per DoodStream e siti con token legati all'IP
+- ⚡ **Async** — connessioni asincrone con keep-alive via aiohttp
+- 🔓 **DRM Decryption** — ClearKey via FFmpeg o legacy converter
+- 📼 **DVR integrato** — registra mentre guardi, con auto-eliminazione programmabile
+- 🛠️ **Builder M3U** — crea e testa playlist M3U personalizzate dall'interfaccia web
+- 📱 **Web Interface** — dashboard completa con Swagger UI (`/docs`)
+- 🔑 **Autenticazione API** — protezione con password via header o query param
+- 🔄 **Retry automatico** — resilienza agli errori di rete
+- 🌐 **Proxy SOCKS5/HTTP** — routing per dominio con `TRANSPORT_ROUTES`
+- 📺 **Drop-in MediaFlow Proxy** — compatibile con gli add-on Stremio
+
+{% if channel == "edge" %}
+## WARNING! THIS IS AN EDGE VERSION!
+
+This add-on repository contains edge builds based on the latest development version.
+
+- They may not work at all.
+- They might stop working at any time.
+- They could have a negative impact on your system.
+
+{% endif %}
+
+## Installation
+
+1. Vai su **Impostazioni → Add-on → Store → ⋮ → Repository**
+2. Aggiungi: `https://github.com/MLnalis/ha-easyproxy`
+3. Clicca **AGGIUNGI → CHIUDI**
+4. Trova **EasyProxy Full** nello Store e clicca **INSTALLA**
+
+> ⚠️ Il primo build richiede **20–40 minuti** (download Playwright, Camoufox, Chromium).
+
+## Configuration
+
+```yaml
+api_password: "cambiami"
+port: 7860
+mpd_mode: legacy
+log_level: WARNING
+dvr_enabled: false
+global_proxy: ""
+transport_routes: ""
+workers: 0
+```
+
+### Opzioni
+
+| Opzione | Default | Descrizione |
+|---|---|---|
+| `api_password` | `cambiami` | Password per proteggere le API |
+| `port` | `7860` | Porta del server |
+| `mpd_mode` | `legacy` | `ffmpeg` (qualità migliore) / `legacy` (leggero) / `none` |
+| `log_level` | `WARNING` | `DEBUG` / `INFO` / `WARNING` / `ERROR` / `CRITICAL` |
+| `dvr_enabled` | `false` | Abilita registrazione stream |
+| `global_proxy` | _(vuoto)_ | Proxy HTTP/SOCKS5 globale (es. `socks5://host:1080`) |
+| `transport_routes` | _(vuoto)_ | Routing proxy per dominio (vedi sotto) |
+| `workers` | `0` | Worker Gunicorn — `0` = auto (n. CPU) |
+
+### Transport Routes
+
+Permette di usare proxy diversi in base al dominio di destinazione:
+
+```yaml
+transport_routes: "{URL=vavoo.to, PROXY=socks5://proxy1:1080, DISABLE_SSL=true}, {URL=dlhd.dad, PROXY=http://proxy2:8080}"
+```
+
+## Usage
+
+Dopo l'avvio, accedi tramite **APRI INTERFACCIA WEB** oppure direttamente a
+`http://<IP_HA>:7860`.
+
+### Stremio / MediaFlow Proxy
+
+- **Proxy URL**: `http://<IP_HA>:7860`
+- **API Password**: quella impostata in configurazione
+
+### Endpoint principali
+
+| Endpoint | Descrizione |
+|---|---|
+| `/proxy/manifest.m3u8?url=URL&api_password=PWD` | Proxy HLS / M3U8 |
+| `/proxy/mpd/manifest.m3u8?url=URL&api_password=PWD` | MPD/DASH → HLS |
+| `/extractor?url=URL&api_password=PWD` | Estrazione URL da provider |
+| `/builder` | Builder playlist M3U |
+| `/api/info` | Info server JSON |
+| `/docs` | Swagger UI |
+
+### DVR / Registrazioni
+
+Con `dvr_enabled: true` i file vengono salvati in:
+
+```
+/share/easyproxy/recordings/
+```
+
+Accessibile tramite gli add-on **Samba** o **File Editor** di Home Assistant.
+
+## Support
+
+Hai domande o problemi?
+
+- [EasyProxy su GitHub][easyproxy-github]
+- [Repository add-on][repo]
+
+[easyproxy-github]: https://github.com/realbestia1/EasyProxy
+[license-shield]: https://img.shields.io/github/license/MLnalis/ha-easyproxy.svg
+[maintenance-shield]: https://img.shields.io/maintenance/yes/2026.svg
+[releases-shield]: https://img.shields.io/github/v/release/MLnalis/ha-easyproxy
+[releases]: https://github.com/MLnalis/ha-easyproxy/releases
+[repo]: https://github.com/MLnalis/ha-easyproxy
