@@ -34,7 +34,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     wget \
     unzip \
     xvfb \
-    xvfbwrapper \
     libnss3 \
     libatk1.0-0 \
     libatk-bridge2.0-0 \
