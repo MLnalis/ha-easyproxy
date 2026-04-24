@@ -1,6 +1,6 @@
-name: "EasyProxy"
-description: "EasyProxy per Home Assistant: proxy HLS/M3U8/IPTV"
-version: "1.0.4"
+name: "EasyProxy Full"
+description: "EasyProxy Full per Home Assistant: proxy HLS/M3U8/IPTV con FlareSolverr, Byparr e Cloudflare WARP"
+version: "2.0.0"
 slug: "easyproxy"
 init: false
 
@@ -21,20 +21,39 @@ options:
   dvr_enabled: false
   global_proxy: ""
   transport_routes: ""
+  enable_warp: false
+  warp_license_key: ""
+  warp_excluded_hosts: ""
+  solvers_force_warp_proxy: false
+  workers: 0
 
 schema:
   api_password: str
   port: int
-  mpd_mode: list(ffmpeg|legacy)
+  mpd_mode: list(ffmpeg|legacy|none)
   log_level: list(DEBUG|INFO|WARNING|ERROR|CRITICAL)
   dvr_enabled: bool
   global_proxy: str
   transport_routes: str
+  enable_warp: bool
+  warp_license_key: str
+  warp_excluded_hosts: str
+  solvers_force_warp_proxy: bool
+  workers: int
 
 map:
   - share:rw
 
+# Richiede accesso a /dev/net/tun e NET_ADMIN per Cloudflare WARP
+# Home Assistant OS li concede automaticamente se host_network: true
+host_network: false
+privileged: false
+apparmor: false
+
+devices:
+  - /dev/net/tun
+
 ingress: true
 ingress_port: 7860
 panel_icon: "mdi:television-play"
-panel_title: "EasyProxy"
+panel_title: "EasyProxy Full"
