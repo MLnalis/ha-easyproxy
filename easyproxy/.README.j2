@@ -83,7 +83,7 @@ workers: 0
 
 ### Transport Routes
 
-Permette di usare proxy diversi in base al dominio di destinazione:
+Routing proxy differenziato per dominio:
 
 ```yaml
 transport_routes: "{URL=vavoo.to, PROXY=socks5://proxy1:1080, DISABLE_SSL=true}, {URL=dlhd.dad, PROXY=http://proxy2:8080}"
@@ -91,8 +91,7 @@ transport_routes: "{URL=vavoo.to, PROXY=socks5://proxy1:1080, DISABLE_SSL=true},
 
 ## Usage
 
-Dopo l'avvio, accedi tramite **APRI INTERFACCIA WEB** oppure direttamente a
-`http://<IP_HA>:7860`.
+Accedi tramite **APRI INTERFACCIA WEB** o direttamente a `http://<IP_HA>:7860`.
 
 ### Stremio / MediaFlow Proxy
 
@@ -112,17 +111,10 @@ Dopo l'avvio, accedi tramite **APRI INTERFACCIA WEB** oppure direttamente a
 
 ### DVR / Registrazioni
 
-Con `dvr_enabled: true` i file vengono salvati in:
-
-```
-/share/easyproxy/recordings/
-```
-
-Accessibile tramite gli add-on **Samba** o **File Editor** di Home Assistant.
+Con `dvr_enabled: true` i file vengono salvati in `/share/easyproxy/recordings/`,
+accessibile tramite gli add-on **Samba** o **File Editor** di Home Assistant.
 
 ## Support
-
-Hai domande o problemi?
 
 - [EasyProxy su GitHub][easyproxy-github]
 - [Repository add-on][repo]
