@@ -24,4 +24,3 @@ schema:
   workers: int
 map:
   - config:rw
-image: "ghcr.io/home-assistant/{arch}-addon-easyproxy"
