@@ -1,6 +1,6 @@
 name: "EasyProxy Full"
-description: "Proxy universale HLS/M3U8/IPTV con FlareSolverr v3 e Byparr. Compatibile con Stremio/MediaFlow Proxy."
-version: "2.1.0"
+description: "Proxy HLS/M3U8/IPTV con FlareSolverr v3 e Byparr. Drop-in per Stremio/MediaFlow Proxy."
+version: "2.1.1"
 slug: "easyproxy"
 init: false
 
@@ -11,7 +11,7 @@ arch:
 ports:
   7860/tcp: 7860
 ports_description:
-  7860/tcp: "Web Interface & API"
+  7860/tcp: "EasyProxy Web Interface & API"
 
 options:
   api_password: "cambiami"
@@ -39,4 +39,4 @@ map:
 ingress: true
 ingress_port: 7860
 panel_icon: "mdi:television-play"
-panel_title: "EasyProxy Full"
+panel_title: "EasyProxy"
