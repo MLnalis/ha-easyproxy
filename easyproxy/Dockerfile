@@ -1,10 +1,11 @@
 # EasyProxy Full — Home Assistant Add-on
-# Include: FlareSolverr v3, Byparr, Cloudflare WARP, Chromium, FFmpeg
+# Include: FlareSolverr v3, Byparr, Chromium, FFmpeg
+# Equivalente a: docker run -d -p 7860:7860 ghcr.io/realbestia1/easyproxy:full
 
 FROM python:3.12-slim-bookworm
 
-# ---------- Environment ----------
 WORKDIR /app
+
 ENV PYTHONUNBUFFERED=1
 ENV PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
 ENV PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=0
@@ -16,14 +17,9 @@ ENV FLARESOLVERR_URL=http://localhost:8191
 ENV BYPARR_URL=http://localhost:8192
 ENV BYPARR_PORT=8192
 
-# ---------- System deps + Cloudflare WARP repo ----------
+# ---------- System dependencies ----------
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    curl \
     git \
-    gnupg \
-    gpg \
-    netcat-openbsd \
-    xvfb \
     ffmpeg \
     chromium \
     chromium-driver \
@@ -46,11 +42,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libglu1-mesa \
     ca-certificates \
     fonts-liberation \
- && curl -fsSL https://pkg.cloudflareclient.com/pubkey.gpg \
-      | gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg \
- && echo "deb [signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ bookworm main" \
-      | tee /etc/apt/sources.list.d/cloudflare-client.list \
- && apt-get update && apt-get install -y --no-install-recommends cloudflare-warp \
  && rm -rf /var/lib/apt/lists/*
 
 # ---------- FlareSolverr v3 (Python) ----------
@@ -61,7 +52,7 @@ RUN git clone https://github.com/FlareSolverr/FlareSolverr.git /app/flaresolverr
  && sed -i "s|^\([[:space:]]*\)start_xvfb_display()|\1pass|g" src/utils.py \
  && pip install --no-cache-dir -r requirements.txt
 
-# ---------- Byparr (patch: rimuove vincolo Python >=3.14) ----------
+# ---------- Byparr (patch: rimuove vincolo Python >= 3.14) ----------
 RUN git clone https://github.com/ThePhaseless/Byparr.git /app/byparr_src \
  && cd /app/byparr_src \
  && sed -i 's/requires-python = .*/requires-python = ">=3.11"/' pyproject.toml \
@@ -76,8 +67,9 @@ WORKDIR /app/easyproxy
 RUN pip install --no-cache-dir -r requirements.txt \
  && python -m playwright install chromium
 
-# ---------- HA start script ----------
+# ---------- HA scripts + template personalizzato ----------
 COPY start.py /start.py
+COPY info.html /info.html
 
 EXPOSE 7860
 

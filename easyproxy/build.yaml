@@ -1,11 +1,8 @@
-# build.yaml — specifica l'immagine base per il builder di Home Assistant.
-# Non utilizzato direttamente (il Dockerfile costruisce tutto da zero),
-# ma richiesto da alcuni Supervisor per evitare errori di validazione.
 build_from:
   aarch64: "python:3.12-slim-bookworm"
   amd64: "python:3.12-slim-bookworm"
 
 labels:
   org.opencontainers.image.title: "EasyProxy Full"
-  org.opencontainers.image.description: "HLS/M3U8/IPTV proxy with FlareSolverr, Byparr and WARP for Home Assistant"
+  org.opencontainers.image.description: "HLS/M3U8/IPTV proxy with FlareSolverr and Byparr for Home Assistant"
   org.opencontainers.image.source: "https://github.com/realbestia1/EasyProxy"
