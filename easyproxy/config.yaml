@@ -6,7 +6,6 @@ url: "https://github.com/realbestia1/EasyProxy"
 arch:
   - amd64
   - aarch64
-  - armv7
 
 startup: application
 boot: auto
@@ -20,7 +19,7 @@ ports_description:
 webui: "http://[HOST]:[PORT:7860]"
 watchdog: "http://[HOST]:[PORT:7860]"
 
-image: "ghcr.io/realbestia1/easyproxy:latest"
+image: "ghcr.io/realbestia1/easyproxy"
 init: false
 
 options:

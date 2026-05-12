@@ -1,4 +1,3 @@
 build_from:
   amd64: ghcr.io/realbestia1/easyproxy:latest
   aarch64: ghcr.io/realbestia1/easyproxy:latest
-  armv7: ghcr.io/realbestia1/easyproxy:latest
