@@ -1,5 +1,5 @@
 name: "EasyProxy"
-version: "1.0.0"
+version: "latest"
 slug: "easyproxy"
 description: "EasyProxy - Proxy HTTP/HTTPS con supporto MPD/DASH, routing avanzato e interfaccia web sulla porta 7860."
 url: "https://github.com/realbestia1/EasyProxy"
