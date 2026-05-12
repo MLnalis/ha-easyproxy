@@ -1,29 +1,38 @@
-# EasyProxy (FULL, no WARP)
+# EasyProxy - Documentazione
 
-Proxy streaming per Stremio — versione FULL con FlareSolverr v3 e Byparr, senza WARP.
+EasyProxy è un proxy HTTP/HTTPS avanzato con supporto per stream MPD/DASH, routing per URL pattern e interfaccia web integrata.
 
 ## Configurazione
 
-| Opzione | Descrizione | Default |
-|---|---|---|
-| `api_password` | Password API | `cambia_questa_password` |
-| `workers` | Worker Gunicorn | `1` |
+### Opzioni principali
 
-## Porte
+| Opzione         | Tipo   | Default | Descrizione                                        |
+|----------------|--------|---------|----------------------------------------------------|
+| `api_password`  | string | `ep`    | Password per l'accesso all'API e all'interfaccia web |
+| `port`          | int    | `7860`  | Porta su cui EasyProxy è in ascolto                |
 
-| Porta | Servizio |
-|---|---|
-| `7860` | EasyProxy (principale) |
-| `8191` | FlareSolverr v3 |
-| `8192` | Byparr |
+### Opzioni avanzate (opzionali)
 
-## Utilizzo con Stremio
+| Opzione             | Tipo   | Descrizione                                                     |
+|--------------------|--------|-----------------------------------------------------------------|
+| `global_proxy`      | string | Proxy globale per tutte le richieste. Es: `http://myproxy.com:8080` |
+| `transport_routes`  | string | Regole routing avanzato per URL pattern (vedi sotto)           |
+| `mpd_mode`          | string | Modalità gestione stream MPD/DASH: `ffmpeg` o `legacy`         |
 
-- **Proxy URL**: `http://<IP_HA>:7860`
-- **Password**: valore di `api_password`
+### Formato TRANSPORT_ROUTES
 
-## Note tecniche
+Formato: `{URL=pattern, PROXY=proxy_url, DISABLE_SSL=true}, {URL=pattern2, ...}`
 
-- WARP è installato ma **mai avviato** (ENV ENABLE_WARP=false)
-- FlareSolverr usa Chromium in modalità `--single-process --no-zygote` per compatibilità con i container HAOS
-- Prima build: ~10-15 minuti
+Esempio:
+```
+{URL=vavoo.to, PROXY=socks5://proxy1:1080, DISABLE_SSL=true}, {URL=dlhd.dad, PROXY=http://proxy2:8080}
+```
+
+## Interfaccia Web
+
+Dopo l'avvio, l'interfaccia web è accessibile tramite il pulsante "APRI WEB UI" nel pannello Add-on, oppure navigando a `http://<ip-homeassistant>:7860`.
+
+## Note
+
+- La porta `7860` deve essere libera sul tuo sistema.
+- Se cambi la porta nel config, aggiorna anche il mapping nella sezione "Network" dell'add-on.

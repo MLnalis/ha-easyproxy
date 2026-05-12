@@ -1,23 +1,38 @@
-name: "EasyProxy (FULL, no WARP)"
-description: >
-  EasyProxy versione FULL senza WARP per Stremio.
-  Include FlareSolverr v3 e Byparr integrati.
-version: "1.0.5"
+name: "EasyProxy"
+version: "1.0.0"
 slug: "easyproxy"
+description: "EasyProxy - Proxy HTTP/HTTPS con supporto MPD/DASH, routing avanzato e interfaccia web sulla porta 7860."
 url: "https://github.com/realbestia1/EasyProxy"
 arch:
   - amd64
   - aarch64
-init: false
+  - armv7
+
+startup: application
+boot: auto
+
 ports:
   7860/tcp: 7860
+
 ports_description:
-  7860/tcp: "EasyProxy Web / API"
+  7860/tcp: "Interfaccia Web EasyProxy"
+
+webui: "http://[HOST]:[PORT:7860]"
+watchdog: "http://[HOST]:[PORT:7860]"
+
+image: "ghcr.io/realbestia1/easyproxy:latest"
+init: false
+
 options:
-  api_password: "cambia_questa_password"
-  workers: 1
+  api_password: "ep"
+  port: 7860
+  global_proxy: ""
+  transport_routes: ""
+  mpd_mode: ""
+
 schema:
-  api_password: str
-  workers: int
-map:
-  - config:rw
+  api_password: "str"
+  port: "port"
+  global_proxy: "str?"
+  transport_routes: "str?"
+  mpd_mode: "list(ffmpeg|legacy|)?"

@@ -1,0 +1,19 @@
+configuration:
+  api_password:
+    name: Password API
+    description: Password per accedere all'interfaccia web e all'API di EasyProxy.
+  port:
+    name: Porta
+    description: La porta su cui EasyProxy è in ascolto (default 7860).
+  global_proxy:
+    name: Proxy Globale
+    description: "Opzionale. URL del proxy usato per tutte le richieste. Esempio: http://myproxy.com:8080"
+  transport_routes:
+    name: Regole di Trasporto
+    description: "Opzionale. Routing avanzato per URL pattern. Formato: {URL=pattern, PROXY=proxy_url, DISABLE_SSL=true}"
+  mpd_mode:
+    name: Modalità MPD/DASH
+    description: "Opzionale. Come gestire gli stream MPD/DASH: 'ffmpeg' (transcoding) o 'legacy' (mpd_converter)."
+
+network:
+  7860/tcp: "Interfaccia Web EasyProxy"
