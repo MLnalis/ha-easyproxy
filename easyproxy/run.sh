@@ -1,28 +1,15 @@
-#!/usr/bin/with-contenv bashio
+#!/bin/bash
+OPTS=/data/options.json
 
-# Leggi configurazione da /data/options.json
-API_PASSWORD=$(bashio::config 'api_password')
-PORT=$(bashio::config 'port')
-GLOBAL_PROXY=$(bashio::config 'global_proxy' || echo "")
-TRANSPORT_ROUTES=$(bashio::config 'transport_routes' || echo "")
-MPD_MODE=$(bashio::config 'mpd_mode' || echo "")
+export API_PASSWORD="$(jq -r '.api_password // "ep"' "$OPTS")"
+export WARP_LICENSE_KEY="$(jq -r '.warp_license_key // ""' "$OPTS")"
+export PORT=7860
 
-export API_PASSWORD
-export PORT
+/bin/bash /app/entrypoint.sh &
+pid=$!
 
-if bashio::config.has_value 'global_proxy'; then
-    export GLOBAL_PROXY
-fi
+# Inoltra lo stop a Python, così l'entrypoint esegue il suo cleanup (wireproxy)
+trap 'pkill -TERM -f "python app.py"; kill -TERM $pid 2>/dev/null' TERM INT
 
-if bashio::config.has_value 'transport_routes'; then
-    export TRANSPORT_ROUTES
-fi
-
-if bashio::config.has_value 'mpd_mode'; then
-    export MPD_MODE
-fi
-
-bashio::log.info "Avvio EasyProxy sulla porta ${PORT}..."
-bashio::log.info "Password API impostata."
-
-exec /start.sh
+wait $pid
+wait $pid
