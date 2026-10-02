@@ -1,37 +1,27 @@
 name: "EasyProxy"
-version: "latest"
-slug: "easyproxy"
-description: "EasyProxy - Proxy HTTP/HTTPS con supporto MPD/DASH, routing avanzato e interfaccia web sulla porta 7860."
+version: "2.0.0"
+slug: easyproxy
+description: "Proxy HLS/M3U8/DASH, estrattori e DVR"
 url: "https://github.com/realbestia1/EasyProxy"
 arch:
   - amd64
   - aarch64
-
 startup: application
 boot: auto
-
 ports:
   7860/tcp: 7860
-
 ports_description:
-  7860/tcp: "Interfaccia Web EasyProxy"
-
-webui: "http://[HOST]:[PORT:7860]"
-watchdog: "http://[HOST]:[PORT:7860]"
-
-image: "ghcr.io/realbestia1/easyproxy"
-init: false
-
+  7860/tcp: "Web UI, proxy e API"
+webui: "http://[HOST]:[7860]/admin"
+watchdog: "tcp://[HOST]:[7860]"
+map:
+  - type: media
+    read_only: false
+  - type: share
+    read_only: false
 options:
-  api_password: "ep"
-  port: 7860
-  global_proxy: ""
-  transport_routes: ""
-  mpd_mode: ""
-
+  api_password: "cambiami"
+  warp_license_key: ""
 schema:
-  api_password: "str"
-  port: "port"
-  global_proxy: "str?"
-  transport_routes: "str?"
-  mpd_mode: "list(ffmpeg|legacy|)?"
+  api_password: password
+  warp_license_key: str?
