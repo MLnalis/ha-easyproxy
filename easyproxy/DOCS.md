@@ -1,38 +1,62 @@
-# EasyProxy - Documentazione
+# EasyProxy - Documentation
 
-EasyProxy è un proxy HTTP/HTTPS avanzato con supporto per stream MPD/DASH, routing per URL pattern e interfaccia web integrata.
+## Configuration
 
-## Configurazione
+| Option | Description | Default |
+| :--- | :--- | :--- |
+| `api_password` | Password protecting the proxy API and the admin panel. **Change it.** | `cambiami` |
+| `warp_license_key` | Optional Cloudflare WARP+ license key, used when the WARP profile is first registered. | empty |
 
-### Opzioni principali
+The server port is fixed at `7860` inside the container. To change the external port, edit it in the add-on **Network** tab.
 
-| Opzione         | Tipo   | Default | Descrizione                                        |
-|----------------|--------|---------|----------------------------------------------------|
-| `api_password`  | string | `ep`    | Password per l'accesso all'API e all'interfaccia web |
-| `port`          | int    | `7860`  | Porta su cui EasyProxy è in ascolto                |
+All other settings (WARP routing, DVR, proxies, NordVPN, WireGuard, Tor) are managed from the admin panel:
+`http://<HA_IP>:7860/admin`.
 
-### Opzioni avanzate (opzionali)
+## Persistent data
 
-| Opzione             | Tipo   | Descrizione                                                     |
-|--------------------|--------|-----------------------------------------------------------------|
-| `global_proxy`      | string | Proxy globale per tutte le richieste. Es: `http://myproxy.com:8080` |
-| `transport_routes`  | string | Regole routing avanzato per URL pattern (vedi sotto)           |
-| `mpd_mode`          | string | Modalità gestione stream MPD/DASH: `ffmpeg` o `legacy`         |
+The add-on `/data` directory holds EasyProxy configuration and the WARP profile (`/data/warp.conf`). It survives restarts and updates. It is included in Home Assistant backups.
 
-### Formato TRANSPORT_ROUTES
+To store DVR recordings on shared storage, the add-on maps `/media` and `/share` read/write. Select one of these paths in the admin panel DVR settings.
 
-Formato: `{URL=pattern, PROXY=proxy_url, DISABLE_SSL=true}, {URL=pattern2, ...}`
+## Usage
 
-Esempio:
+- Dashboard / admin: `http://<HA_IP>:7860/admin`
+- API docs: `http://<HA_IP>:7860/docs`
+- Playlist builder: `http://<HA_IP>:7860/builder`
+- Server info: `http://<HA_IP>:7860/info`
+
+Proxy a stream:
+
 ```
-{URL=vavoo.to, PROXY=socks5://proxy1:1080, DISABLE_SSL=true}, {URL=dlhd.dad, PROXY=http://proxy2:8080}
+http://<HA_IP>:7860/proxy/manifest.m3u8?url=<URL>
 ```
 
-## Interfaccia Web
+Extract a stream:
 
-Dopo l'avvio, l'interfaccia web è accessibile tramite il pulsante "APRI WEB UI" nel pannello Add-on, oppure navigando a `http://<ip-homeassistant>:7860`.
+```
+http://<HA_IP>:7860/extractor/video?d=<URL>&redirect_stream=true
+```
 
-## Note
+If the API password is enabled, add it as required by the upstream API (see `/docs`).
 
-- La porta `7860` deve essere libera sul tuo sistema.
-- Se cambi la porta nel config, aggiorna anche il mapping nella sezione "Network" dell'add-on.
+## Internal SOCKS5 endpoints
+
+These listen on the add-on's loopback and are meant to be referenced from the admin panel:
+
+| Service | Endpoint |
+| :--- | :--- |
+| WARP | `socks5h://127.0.0.1:1080` |
+| NordVPN | `socks5h://127.0.0.1:1081` |
+| Custom WireGuard | `socks5h://127.0.0.1:1082` |
+| Tor | `socks5h://127.0.0.1:9050` |
+
+## Notes
+
+- The first start registers a WARP profile. If it fails, EasyProxy keeps running without WARP.
+- The image includes Chromium, Tor and ffmpeg: allow at least 1 GB of free RAM.
+- Port 7860 is exposed on your LAN. Do not forward it to the internet without protection.
+- Use this software only with content you are legally entitled to access.
+
+## Support
+
+Upstream issues: https://github.com/realbestia1/EasyProxy/issues

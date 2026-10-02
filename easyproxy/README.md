@@ -1,16 +1,28 @@
-# EasyProxy - Home Assistant Add-on
+# Home Assistant Add-on: EasyProxy
 
-Add-on non ufficiale per Home Assistant OS che esegue [EasyProxy](https://github.com/realbestia1/EasyProxy), un proxy HTTP/HTTPS con supporto MPD/DASH e routing avanzato.
+Universal HLS/M3U8/DASH (MPD) proxy, stream extractor and DVR, packaged as a Home Assistant add-on.
 
-## Installazione
+Based on the upstream project: https://github.com/realbestia1/EasyProxy (MIT License).
 
-1. Copia la cartella `easyproxy` nella directory `addons` del tuo Home Assistant
-   (es. tramite Samba share o File Editor: `/addons/easyproxy/`)
-2. Vai su **Impostazioni → Add-on → Store** e clicca il menu (⋮) → **Controlla aggiornamenti**
-3. Cerca "EasyProxy" tra gli add-on locali e clicca **Installa**
-4. Configura le opzioni (almeno `api_password`)
-5. Clicca **Avvia**
+## Features
 
-## Supporto
+- Proxy for HLS, M3U8, MPD (DASH) and static video files
+- ClearKey DRM support
+- Specialized extractors (Vavoo, DaddyliveHD, Sportsonline, VixSrc, DoodStream, EmbedSports, ...)
+- Integrated DVR and Playlist Builder
+- Cloudflare WARP, NordVPN, custom WireGuard and Tor SOCKS5 routes (no privileged mode required)
 
-- Repository originale: https://github.com/realbestia1/EasyProxy
+## Installation
+
+1. Copy this folder to `/addons/easyproxy/` (Samba or SSH add-on), or add it through a custom repository.
+2. Go to **Settings -> Add-ons -> Add-on Store -> ⋮ -> Check for updates**.
+3. Open **EasyProxy** under *Local add-ons*, then **Install**.
+4. Set a strong `api_password`, then **Start**.
+5. Open `http://<HA_IP>:7860/admin`.
+
+## Supported architectures
+
+- amd64
+- aarch64
+
+See `DOCS.md` for configuration and usage details.
