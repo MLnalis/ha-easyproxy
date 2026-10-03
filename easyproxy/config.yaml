@@ -1,0 +1,45 @@
+---
+name: EasyProxy
+version: 1.0.0
+slug: easyproxy
+description: Universal HLS/M3U8 Proxy
+url: https://github.com/MLnalis/ha-easyproxy
+arch:
+  - armv7
+  - aarch64
+  - amd64
+ingress: true
+ingress_port: 7860
+panel_icon: mdi:proxy
+startup: services
+boot: auto
+ports:
+  7860/tcp: 7860
+map:
+  - share:rw
+  - media:rw
+devices:
+  - /dev/net/tun
+privileged:
+  - NET_ADMIN
+  - SYS_ADMIN
+host_network: true
+options:
+  port: 7860
+  api_password: ep
+  enable_warp: false
+  warp_license: ""
+  enable_tor: false
+  enable_nordvpn: false
+  nordvpn_token: ""
+  wireguard_profile: ""
+schema:
+  port: port?
+  api_password: str
+  enable_warp: bool?
+  warp_license: str?
+  enable_tor: bool?
+  enable_nordvpn: bool?
+  nordvpn_token: str?
+  wireguard_profile: str?
+image: ghcr.io/realbestia1/easyproxy
