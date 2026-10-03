@@ -1,9 +1,0 @@
-configuration:
-  api_password:
-    name: API password
-    description: Password protecting the proxy API and the admin panel.
-  warp_license_key:
-    name: WARP license key
-    description: Optional Cloudflare WARP+ license key used at first WARP registration.
-network:
-  7860/tcp: Web UI, proxy and API
