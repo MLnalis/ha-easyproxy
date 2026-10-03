@@ -1,43 +1,37 @@
----
-name: EasyProxy
-version: 1.0.0
-slug: easyproxy
-description: Universal HLS/M3U8 Proxy
-url: https://github.com/MLnalis/ha-easyproxy
+name: "EasyProxy"
+version: "latest"
+slug: "easyproxy"
+description: "EasyProxy - Proxy HTTP/HTTPS con supporto MPD/DASH, routing avanzato e interfaccia web sulla porta 7860."
+url: "https://github.com/realbestia1/EasyProxy"
 arch:
-  - armv7
-  - aarch64
   - amd64
-ingress: true
-ingress_port: 7860
-panel_icon: mdi:proxy
-startup: services
+  - aarch64
+
+startup: application
 boot: auto
+
 ports:
   7860/tcp: 7860
-map:
-  - share:rw
-  - media:rw
-devices:
-  - /dev/net/tun
-host_network: true
+
+ports_description:
+  7860/tcp: "Interfaccia Web EasyProxy"
+
+webui: "http://[HOST]:[PORT:7860]"
+watchdog: "http://[HOST]:[PORT:7860]"
+
+image: "ghcr.io/realbestia1/easyproxy"
+init: false
+
 options:
+  api_password: "ep"
   port: 7860
-  api_password: ep
-  enable_warp: false
-  warp_license: ""
-  enable_tor: false
-  enable_nordvpn: false
-  nordvpn_token: ""
-  wireguard_profile: ""
+  global_proxy: ""
+  transport_routes: ""
+  mpd_mode: ""
+
 schema:
-  port: port?
-  api_password: str
-  enable_warp: bool?
-  warp_license: str?
-  enable_tor: bool?
-  enable_nordvpn: bool?
-  nordvpn_token: str?
-  wireguard_profile: str?
-# SENZA tag - Home Assistant usa automaticamente :latest
-image: ghcr.io/realbestia1/easyproxy
+  api_password: "str"
+  port: "port"
+  global_proxy: "str?"
+  transport_routes: "str?"
+  mpd_mode: "list(ffmpeg|legacy|)?"

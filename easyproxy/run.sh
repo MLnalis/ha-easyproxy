@@ -1,15 +1,28 @@
-#!/bin/bash
-set -e
+#!/usr/bin/with-contenv bashio
 
-CONFIG_FILE="/data/options.json"
+# Leggi configurazione da /data/options.json
+API_PASSWORD=$(bashio::config 'api_password')
+PORT=$(bashio::config 'port')
+GLOBAL_PROXY=$(bashio::config 'global_proxy' || echo "")
+TRANSPORT_ROUTES=$(bashio::config 'transport_routes' || echo "")
+MPD_MODE=$(bashio::config 'mpd_mode' || echo "")
 
-if [ -f "$CONFIG_FILE" ]; then
-    PORT=$(jq -r '.port // 7860' "$CONFIG_FILE")
-    API_PASSWORD=$(jq -r '.api_password // "ep"' "$CONFIG_FILE")
-    export PORT="$PORT"
-    export API_PASSWORD="$API_PASSWORD"
+export API_PASSWORD
+export PORT
+
+if bashio::config.has_value 'global_proxy'; then
+    export GLOBAL_PROXY
 fi
 
-mkdir -p /data/config /data/recordings /data/logs
-echo "🚀 Avvio EasyProxy..."
-exec python3 /app/app.py
+if bashio::config.has_value 'transport_routes'; then
+    export TRANSPORT_ROUTES
+fi
+
+if bashio::config.has_value 'mpd_mode'; then
+    export MPD_MODE
+fi
+
+bashio::log.info "Avvio EasyProxy sulla porta ${PORT}..."
+bashio::log.info "Password API impostata."
+
+exec /start.sh
