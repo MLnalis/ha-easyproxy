@@ -20,9 +20,6 @@ map:
   - media:rw
 devices:
   - /dev/net/tun
-privileged:
-  - NET_ADMIN
-  - SYS_ADMIN
 host_network: true
 options:
   port: 7860
@@ -42,4 +39,5 @@ schema:
   enable_nordvpn: bool?
   nordvpn_token: str?
   wireguard_profile: str?
-image: ghcr.io/realbestia1/easyproxy
+# Immagine ufficiale con tag latest
+image: ghcr.io/realbestia1/easyproxy:latest
