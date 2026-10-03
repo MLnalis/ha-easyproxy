@@ -4,4 +4,4 @@ addons:
   easyproxy:
     repository: mlnalis/ha-easyproxy
     target: easyproxy
-    image: ghcr.io/realbestia1/easyproxy:latest
+    image: ghcr.io/realbestia1/easyproxy

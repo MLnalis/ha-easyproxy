@@ -22,5 +22,3 @@ Utenti aggiungono:
 ```
 https://github.com/MLnalis/ha-easyproxy
 ```
-
-**Nota:** Usa immagine `ghcr.io/realbestia1/easyproxy:latest`

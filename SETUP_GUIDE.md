@@ -26,12 +26,6 @@
    http://[IP-HA]:7860
    ```
 
-## Test
-
-1. Vai su `/admin`
-2. Clicca **Server Info**
-3. Stato: Running ✓
-
 ## Supporto
 
 - Issue: https://github.com/MLnalis/ha-easyproxy/issues
