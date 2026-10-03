@@ -1,28 +1,39 @@
-# EasyProxy HAOS Add-on v1.0.4
+# 🏠 EasyProxy per Home Assistant OS
 
-EasyProxy FULL (FlareSolverr v3 + Byparr) senza WARP per Home Assistant OS.
-Basato su `python:3.12-slim-bookworm`, identico all'originale `Dockerfile.full`.
+**Universal HLS/M3U8 Proxy & Stream Extractor**
 
-## Struttura
+[![Home Assistant Add-on](https://img.shields.io/badge/Home%20Assistant-Add--on-blue)](https://www.home-assistant.io/addons/)
 
+## ✨ Cosa fa
+
+- 🌐 Proxy Universale: HLS, M3U8, DASH
+- 🔓 Supporto DRM: ClearKey
+- 🔐 Extractor: Vavoo, DaddyliveHD, VixSrc
+- 📼 DVR Integrato
+- 🛠️ Playlist Builder
+- ☁️ VPN: WARP, Tor, NordVPN
+
+## 🚀 Installazione
+
+1. HA → Impostazioni → Componenti aggiuntivi
+2. ⋮ → Repository → `https://github.com/MLnalis/ha-easyproxy`
+3. Installa **EasyProxy**
+
+## ⚙️ Configurazione
+
+```yaml
+port: 7860
+api_password: "password_sicura"
 ```
-easyproxy/
-├── config.yaml     ← Metadati add-on (NO build.yaml, NO riga image:)
-├── Dockerfile      ← FROM python:3.12-slim-bookworm, WARP installato ma off
-├── run.sh          ← Avvio con jq (no bashio), ENABLE_WARP=false hardcoded
-├── DOCS.md
-└── CHANGELOG.md
-```
 
-## Installazione
+## 📖 Utilizzo
 
-1. Copia la cartella `easyproxy/` in `/addons/easyproxy/` su HAOS
-2. Impostazioni → Add-on → Store → ⋮ → Controlla aggiornamenti
-3. Installa "EasyProxy" dai Local add-on
-4. Configura `api_password` nella scheda Configurazione
-5. Avvia (prima build: ~10-15 min)
+- Dashboard: `http://[IP-HA]:7860`
+- Admin: `http://[IP-HA]:7860/admin`
 
-## Utilizzo
+## 📄 License
 
-- **Proxy URL**: `http://<IP_HA>:7860`
-- **Password**: quella impostata in `api_password`
+MIT License
+
+---
+Progetto originale: [realbestia1/EasyProxy](https://github.com/realbestia1/EasyProxy)

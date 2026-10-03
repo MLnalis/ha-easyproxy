@@ -1,0 +1,8 @@
+__pycache__/
+*.py[cod]
+*.so
+options.json
+/data/
+*.log
+.vscode/
+.DS_Store
