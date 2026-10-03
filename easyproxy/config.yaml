@@ -39,5 +39,5 @@ schema:
   enable_nordvpn: bool?
   nordvpn_token: str?
   wireguard_profile: str?
-# Immagine ufficiale con tag latest
-image: ghcr.io/realbestia1/easyproxy:latest
+# SENZA tag - Home Assistant usa automaticamente :latest
+image: ghcr.io/realbestia1/easyproxy
